@@ -3,6 +3,7 @@
 ```sh
 
 docker pull confluentinc/cp-server:8.1.0 
+docker pull confluentinc/cp-enterprise-control-center:7.9.4
 
 docker network create net-kafka
 
@@ -16,5 +17,7 @@ docker run -d --hostname broker03 --name broker03 --network net-kafka -p 9094:90
 
 
 docker run -d --hostname kafka-ui --name kafka-ui -p 9088:8080 -e DYNAMIC_CONFIG_ENABLED=true --network net-kafka provectuslabs/kafka-ui
+
+docker run -d --hostname center --name center -p 9021:9021 --network net-kafka --env-file .env.control-center confluentinc/cp-enterprise-control-center:7.9.4 
 
 ```

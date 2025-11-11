@@ -9,6 +9,7 @@ docker pull apache/kafka:4.1.0
 docker network create net-kafka
 
 # Creo un'istanza kafka
-docker run -d --name broker-kafka --hostname broker-kafka --network net-kafka -p 9092:9092 -e KAFKA_NODE_ID=1 apache/kafka:4.1.0
+docker run -d --name broker-kafka --hostname broker-kafka --network net-kafka -p 9092:9092 apache/kafka:4.1.0
 
 ```
+

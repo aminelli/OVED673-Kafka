@@ -3,6 +3,7 @@
 ```sh
 
 docker pull confluentinc/cp-server:8.1.0 
+docker pull confluentinc/cp-server:7.9.4 
 docker pull confluentinc/cp-enterprise-control-center:7.9.4
 
 docker network create net-kafka

@@ -15,4 +15,6 @@ docker run -d --hostname broker02 --name broker02 --network net-kafka -p 9093:90
 docker run -d --hostname broker03 --name broker03 --network net-kafka -p 9094:9094 -p 9103:9101 --env-file .env.broker03 -v vol-broker03:/klogs/kraft-combined-logs confluentinc/cp-server:8.1.0
 
 
+docker run -d --hostname kafka-ui --name kafka-ui -p 9088:8080 -e DYNAMIC_CONFIG_ENABLED=true --network net-kafka provectuslabs/kafka-ui
+
 ```

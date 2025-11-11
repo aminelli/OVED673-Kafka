@@ -27,3 +27,17 @@ bin\windows\kafka-console-producer.bat --topic corso-test --bootstrap-server loc
 bin\windows\kafka-console-consumer.bat --topic corso-test --bootstrap-server localhost:9092 --from-beginning
 
 ```
+
+
+```sh
+# COMANDI UTILI
+
+# Entrare nel container con processo root
+docker exec -it --user root broker-kafka /bin/bash
+
+# Nel container lanciare:
+apk update
+apk add htop
+
+
+```

@@ -14,4 +14,16 @@ bin\windows\kafka-storage.bat format --standalone -t 0y2X7NWETBKqeNI8Y5ixxg -c c
 # Start Kafka Server (Brocker standalone)
 bin\windows\kafka-server-start.bat config\server.properties
 
+# Creazione Topic
+bin\windows\kafka-topics.bat --create --topic corso-test --bootstrap-server localhost:9092 --partitions 3 --replication-factor 1
+
+# Recupera info sul topic
+bin\windows\kafka-topics.bat --describe --topic corso-test --bootstrap-server localhost:9092    
+
+# Aprire un nuovo terminale, spostarsi sulla cartella di Kafka ed eseguire il seguente comando per creare un producer:
+bin\windows\kafka-console-producer.bat --topic corso-test --bootstrap-server localhost:9092
+
+# Aprire un nuovo terminale, spostarsi sulla cartella di Kafka ed eseguire il seguente comando per creare un consumer:
+bin\windows\kafka-console-consumer.bat --topic corso-test --bootstrap-server localhost:9092 --from-beginning
+
 ```

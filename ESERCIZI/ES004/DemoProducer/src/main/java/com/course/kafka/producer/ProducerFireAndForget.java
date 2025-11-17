@@ -1,9 +1,13 @@
 package com.course.kafka.producer;
 
+import com.course.kafka.utils.Utils;
+import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerConfig;
+import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.serialization.StringSerializer;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Properties;
 
 public class ProducerFireAndForget {
@@ -12,6 +16,8 @@ public class ProducerFireAndForget {
 
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
+        // PREPAZIONE PARAMETRI DI CONFIGURAZIONE
+
         Properties props = new Properties();
 
         // Endpoints dei nodi del cluster
@@ -19,14 +25,47 @@ public class ProducerFireAndForget {
         props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092, localhost:9093, localhost:9094");
 
         // Client ID
-        props.put(ProducerConfig.CLIENT_ID_CONFIG,"PRD-001");
+        props.put(ProducerConfig.CLIENT_ID_CONFIG, "PRD-001");
 
         // Algoritmo di compressione
-        props.put(ProducerConfig.COMPRESSION_TYPE_CONFIG,"gzip");
+        props.put(ProducerConfig.COMPRESSION_TYPE_CONFIG, "gzip");
 
         // TIPO ACK
         props.put(ProducerConfig.ACKS_CONFIG, "0");
 
+        // Full package name delle classi da utilizzare per le serializzazioni delle chiavi e corrispettivi valori
+        // props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringSerializer");
+        // props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringSerializer");
+        props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
+        props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
+
+        // LOGICA DI CREAZIONE PRODUCER E INVIO MESSAGGI
+
+        KafkaProducer<String, String> producer = new KafkaProducer<>(props);
+
+        ProducerRecord<String, String> record = null;
+
+        Date startDate = new Date();
+
+        try {
+
+            for (int count = 0; count < totalMessages; count++) {
+                String key = "K" + count;
+                String headData = "MSG" + count;
+                record = new ProducerRecord<>(topicName, key, "Messaggio nr " + count + " del " + formatter.format(new Date()));
+                record.headers().add("CORSO_DATA", headData.getBytes());
+                producer.send(record);
+            }
+        } catch (Exception e) {
+            System.out.println("Producer Error");
+        }
+
+        Date endDate = new Date();
+
+        Utils.printDateDiff(startDate, endDate, formatter);
+
+        producer.flush();
+        producer.close();
 
     }
 

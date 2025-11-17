@@ -13,6 +13,8 @@ import java.util.concurrent.Future;
 
 public class ProducerAckOne extends ProducerBase {
 
+    static int countMsg = 0;
+
     // Ack = 1 e Sync
     public void sendMessagesSync(
             String topicName,
@@ -88,11 +90,13 @@ public class ProducerAckOne extends ProducerBase {
 
     // Ack = 1 e Async
     public void sendMessagesAsync(
-    String topicName,
-    long totalMessages,
-    final int partitions,
-    final short replications
-    ) {
+            String topicName,
+            long totalMessages,
+            final int partitions,
+            final short replications
+    ) throws InterruptedException {
+
+        countMsg = 0;
 
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
@@ -142,13 +146,33 @@ public class ProducerAckOne extends ProducerBase {
                 producer.send(record, new Callback() {
                     @Override
                     public void onCompletion(RecordMetadata recordMetadata, Exception e) {
+                        countMsg++;
+                        ;
+
                         if (e != null) {
                             System.out.println("Producer Error");
-                        } else if (recordMetadata != null) {
+                        } else if (countMsg == totalMessages - 1) {
+
+                            Date endDate = new Date();
+                            Utils.printDateDiff(startDate, endDate, formatter);
+                            System.out.println("Producer Completed");
                             printMetadata(recordMetadata);
                         }
                     }
                 });
+
+                producer.send(record, (recordMetadata, e) -> {
+                    countMsg++;
+                    if (e != null) {
+                        System.out.println("Producer Error");
+                    } else if (countMsg == totalMessages - 1) {
+                        Date endDate = new Date();
+                        Utils.printDateDiff(startDate, endDate, formatter);
+                        System.out.println("Producer Completed");
+                        printMetadata(recordMetadata);
+                    }
+                });
+
 
                 //System.out.println("Sent message : " + key);
             }
@@ -156,9 +180,8 @@ public class ProducerAckOne extends ProducerBase {
             System.out.println("Producer Error");
         }
 
-        Date endDate = new Date();
-
-        Utils.printDateDiff(startDate, endDate, formatter);
+        //Date endDate = new Date();
+        //Utils.printDateDiff(startDate, endDate, formatter);
 
         producer.flush();
         producer.close();

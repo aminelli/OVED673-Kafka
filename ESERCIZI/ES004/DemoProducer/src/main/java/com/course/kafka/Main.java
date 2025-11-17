@@ -24,20 +24,20 @@ public class Main {
 
     public static void Menu02(Scanner scanner){
         var producer = new ProducerAckOne();
-        producer.sendMessagesSync("CORSO_ACK_01", 5000, 3, (short)3);
+        producer.sendMessagesSync("CORSO_ACK_01", 1000, 3, (short)3);
         System.out.println("\n\nPremere un tasto per continuare...");
         scanner.nextLine();
     }
 
-    public static void Menu03(Scanner scanner){
+    public static void Menu03(Scanner scanner) throws InterruptedException {
         var producer = new ProducerAckOne();
-        producer.sendMessagesAsync("CORSO_ACK_01_ASYNC", 5000, 3, (short)3);
+        producer.sendMessagesAsync("CORSO_ACK_01_ASYNC", 1000, 3, (short)3);
         System.out.println("\n\nPremere un tasto per continuare...");
         scanner.nextLine();
     }
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
 
         Scanner scanner = new Scanner(System.in);
 
@@ -51,8 +51,8 @@ public class Main {
             System.out.println("MENU PRINCIPALE");
             System.out.println("-".repeat(30));
             System.out.println("1. Producer - Fire And Forget (ack 0)");
-            System.out.println("2. Producer - Ack 1 Sync)");
-            System.out.println("3. Producer - Ack 2 Async)");
+            System.out.println("2. Producer - Ack 1 Sync");
+            System.out.println("3. Producer - Ack 2 Async");
             System.out.println("-".repeat(30));
             System.out.println("0. Esci");
             System.out.println("-".repeat(30));

@@ -1,5 +1,6 @@
 package com.course.kafka;
 
+import com.course.kafka.producer.ProducerAckAll;
 import com.course.kafka.producer.ProducerAckOne;
 import com.course.kafka.producer.ProducerFireAndForget;
 import com.course.kafka.producer.ProducerTestPartitioner;
@@ -18,14 +19,14 @@ public class Main {
 
     public static void Menu01(Scanner scanner){
         var producer = new ProducerFireAndForget();
-        producer.sendMessages("CORSO_FAF", 1000000, 1, (short)1);
+        producer.sendMessages("CORSO_FIRE_AND_FORGET", 1000000, 1, (short)1);
         System.out.println("\n\nPremere un tasto per continuare...");
         scanner.nextLine();
     }
 
     public static void Menu02(Scanner scanner){
         var producer = new ProducerAckOne();
-        producer.sendMessagesSync("CORSO_ACK_01", 1000, 3, (short)3);
+        producer.sendMessagesSync("CORSO_ACK_01_SYNC", 1000, 3, (short)3);
         System.out.println("\n\nPremere un tasto per continuare...");
         scanner.nextLine();
     }
@@ -33,6 +34,21 @@ public class Main {
     public static void Menu03(Scanner scanner) throws InterruptedException {
         var producer = new ProducerAckOne();
         producer.sendMessagesAsync("CORSO_ACK_01_ASYNC", 1000, 3, (short)3);
+        System.out.println("\n\nPremere un tasto per continuare...");
+        scanner.nextLine();
+    }
+
+
+    public static void Menu04(Scanner scanner){
+        var producer = new ProducerAckAll();
+        producer.sendMessagesSync("CORSO_ACK_ALL_SYNC", 1000, 3, (short)3);
+        System.out.println("\n\nPremere un tasto per continuare...");
+        scanner.nextLine();
+    }
+
+    public static void Menu05(Scanner scanner) throws InterruptedException {
+        var producer = new ProducerAckAll();
+        producer.sendMessagesAsync("CORSO_ACK_ALL_ASYNC", 1000, 3, (short)3);
         System.out.println("\n\nPremere un tasto per continuare...");
         scanner.nextLine();
     }
@@ -60,7 +76,9 @@ public class Main {
             System.out.println("-".repeat(30));
             System.out.println("1. Producer - Fire And Forget (ack 0)");
             System.out.println("2. Producer - Ack 1 Sync");
-            System.out.println("3. Producer - Ack 2 Async");
+            System.out.println("3. Producer - Ack 1 Async");
+            System.out.println("4. Producer - Ack All Sync");
+            System.out.println("5. Producer - Ack All Async");
             System.out.println("6. Producer - Custom Partitioner");
             System.out.println("-".repeat(30));
             System.out.println("0. Esci");
@@ -70,19 +88,21 @@ public class Main {
 
             switch (choice) {
                 case 1:
-                    //System.out.println("\n");
                     Menu01(scanner);
                     break;
                 case 2:
-                    //System.out.println("\n");
                     Menu02(scanner);
                     break;
                 case 3:
-                    //System.out.println("\n");
                     Menu03(scanner);
                     break;
+                case 4:
+                    Menu04(scanner);
+                    break;
+                case 5:
+                    Menu05(scanner);
+                    break;
                 case 6:
-                    //System.out.println("\n");
                     Menu06(scanner);
                     break;
                 case 0:

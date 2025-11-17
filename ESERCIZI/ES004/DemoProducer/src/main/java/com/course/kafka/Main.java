@@ -16,10 +16,18 @@ public class Main {
 
     public static void Menu01(Scanner scanner){
         var producer = new ProducerFireAndForget();
-        producer.sendMessages("CORSO_FAF", 5000);
+        producer.sendMessages("CORSO_FAF", 1000000, 1, (short)1);
         System.out.println("\n\nPremere un tasto per continuare...");
         scanner.nextLine();
     }
+
+    public static void Menu02(Scanner scanner){
+        var producer = new ProducerFireAndForget();
+        producer.sendMessages("CORSO_FAF", 5000, 3, (short)3);
+        System.out.println("\n\nPremere un tasto per continuare...");
+        scanner.nextLine();
+    }
+
 
     public static void main(String[] args) {
 
@@ -35,6 +43,7 @@ public class Main {
             System.out.println("MENU PRINCIPALE");
             System.out.println("-".repeat(30));
             System.out.println("1. Producer - Caso 1 - Fire And Forget (ack 0)");
+            System.out.println("2. Producer - Caso 2 - Ack 1 Sync)");
             System.out.println("-".repeat(30));
             System.out.println("0. Esci");
             System.out.println("-".repeat(30));
@@ -45,6 +54,10 @@ public class Main {
                 case 1:
                     //System.out.println("\n");
                     Menu01(scanner);
+                    break;
+                case 2:
+                    //System.out.println("\n");
+                    Menu02(scanner);
                     break;
                 case 0:
                     System.out.println("Ciao");

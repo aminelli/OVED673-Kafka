@@ -1,5 +1,6 @@
 package com.course.kafka.producer;
 
+import com.course.kafka.admin.KafkaAdmins;
 import com.course.kafka.utils.Utils;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerConfig;
@@ -12,7 +13,12 @@ import java.util.Properties;
 
 public class ProducerFireAndForget {
 
-    public void sendMessages(String topicName, long totalMessages) {
+    public void sendMessages(
+            String topicName,
+            long totalMessages,
+            final int partitions,
+            final short replications
+    ) {
 
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
@@ -41,6 +47,8 @@ public class ProducerFireAndForget {
 
         // LOGICA DI CREAZIONE PRODUCER E INVIO MESSAGGI
 
+        KafkaAdmins.createTopic(topicName, partitions, replications, props);
+
         KafkaProducer<String, String> producer = new KafkaProducer<>(props);
 
         ProducerRecord<String, String> record = null;
@@ -56,7 +64,7 @@ public class ProducerFireAndForget {
                 record.headers().add("CORSO_DATA", headData.getBytes());
                 producer.send(record);
 
-                System.out.println("Sent message : " + key);
+                //System.out.println("Sent message : " + key);
             }
         } catch (Exception e) {
             System.out.println("Producer Error");

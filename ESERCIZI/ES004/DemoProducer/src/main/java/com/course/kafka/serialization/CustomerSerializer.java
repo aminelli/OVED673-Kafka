@@ -48,7 +48,7 @@ public class CustomerSerializer implements Serializer<Customer> {
 
 
             return buffer.array();
-            
+
         } catch (Exception e) {
             return new byte[0];
         }

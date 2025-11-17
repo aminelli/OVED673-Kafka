@@ -29,6 +29,13 @@ public class Main {
         scanner.nextLine();
     }
 
+    public static void Menu03(Scanner scanner){
+        var producer = new ProducerAckOne();
+        producer.sendMessagesAsync("CORSO_ACK_01_ASYNC", 5000, 3, (short)3);
+        System.out.println("\n\nPremere un tasto per continuare...");
+        scanner.nextLine();
+    }
+
 
     public static void main(String[] args) {
 
@@ -43,8 +50,9 @@ public class Main {
             System.out.println("-".repeat(30));
             System.out.println("MENU PRINCIPALE");
             System.out.println("-".repeat(30));
-            System.out.println("1. Producer - Caso 1 - Fire And Forget (ack 0)");
-            System.out.println("2. Producer - Caso 2 - Ack 1 Sync)");
+            System.out.println("1. Producer - Fire And Forget (ack 0)");
+            System.out.println("2. Producer - Ack 1 Sync)");
+            System.out.println("3. Producer - Ack 2 Async)");
             System.out.println("-".repeat(30));
             System.out.println("0. Esci");
             System.out.println("-".repeat(30));
@@ -59,6 +67,10 @@ public class Main {
                 case 2:
                     //System.out.println("\n");
                     Menu02(scanner);
+                    break;
+                case 3:
+                    //System.out.println("\n");
+                    Menu03(scanner);
                     break;
                 case 0:
                     System.out.println("Ciao");

@@ -3,10 +3,7 @@ package com.course.kafka.producer;
 import com.course.kafka.admin.KafkaAdmins;
 import com.course.kafka.base.ProducerBase;
 import com.course.kafka.utils.Utils;
-import org.apache.kafka.clients.producer.KafkaProducer;
-import org.apache.kafka.clients.producer.ProducerConfig;
-import org.apache.kafka.clients.producer.ProducerRecord;
-import org.apache.kafka.clients.producer.RecordMetadata;
+import org.apache.kafka.clients.producer.*;
 import org.apache.kafka.common.serialization.StringSerializer;
 
 import java.text.SimpleDateFormat;
@@ -89,7 +86,13 @@ public class ProducerAckOne extends ProducerBase {
 
     }
 
-    public void sendMessagesAsync(String topicName, long totalMessages) {
+    // Ack = 1 e Async
+    public void sendMessagesAsync(
+    String topicName,
+    long totalMessages,
+    final int partitions,
+    final short replications
+    ) {
 
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
@@ -108,7 +111,7 @@ public class ProducerAckOne extends ProducerBase {
         props.put(ProducerConfig.COMPRESSION_TYPE_CONFIG, "gzip");
 
         // TIPO ACK
-        props.put(ProducerConfig.ACKS_CONFIG, "0");
+        props.put(ProducerConfig.ACKS_CONFIG, "1");
 
         // Full package name delle classi da utilizzare per le serializzazioni delle chiavi e corrispettivi valori
         // props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringSerializer");
@@ -117,6 +120,9 @@ public class ProducerAckOne extends ProducerBase {
         props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
 
         // LOGICA DI CREAZIONE PRODUCER E INVIO MESSAGGI
+
+        KafkaAdmins.createTopic(topicName, partitions, replications, props);
+
 
         KafkaProducer<String, String> producer = new KafkaProducer<>(props);
 
@@ -131,7 +137,18 @@ public class ProducerAckOne extends ProducerBase {
                 String headData = "MSG" + count;
                 record = new ProducerRecord<>(topicName, key, "Messaggio nr " + count + " del " + formatter.format(new Date()));
                 record.headers().add("CORSO_DATA", headData.getBytes());
-                producer.send(record);
+
+                // Uso Anonymous
+                producer.send(record, new Callback() {
+                    @Override
+                    public void onCompletion(RecordMetadata recordMetadata, Exception e) {
+                        if (e != null) {
+                            System.out.println("Producer Error");
+                        } else if (recordMetadata != null) {
+                            printMetadata(recordMetadata);
+                        }
+                    }
+                });
 
                 //System.out.println("Sent message : " + key);
             }

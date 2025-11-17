@@ -2,6 +2,7 @@ package com.course.kafka;
 
 import com.course.kafka.producer.ProducerAckOne;
 import com.course.kafka.producer.ProducerFireAndForget;
+import com.course.kafka.producer.ProducerTestPartitioner;
 
 import java.util.Scanner;
 
@@ -36,6 +37,13 @@ public class Main {
         scanner.nextLine();
     }
 
+    public static void Menu06(Scanner scanner) throws InterruptedException {
+        var producer = new ProducerTestPartitioner();
+        producer.sendMessages("CORSO_CST_PART_02", 10000, 3, (short)3);
+        System.out.println("\n\nPremere un tasto per continuare...");
+        scanner.nextLine();
+    }
+
 
     public static void main(String[] args) throws InterruptedException {
 
@@ -53,6 +61,7 @@ public class Main {
             System.out.println("1. Producer - Fire And Forget (ack 0)");
             System.out.println("2. Producer - Ack 1 Sync");
             System.out.println("3. Producer - Ack 2 Async");
+            System.out.println("6. Producer - Custom Partitioner");
             System.out.println("-".repeat(30));
             System.out.println("0. Esci");
             System.out.println("-".repeat(30));
@@ -71,6 +80,10 @@ public class Main {
                 case 3:
                     //System.out.println("\n");
                     Menu03(scanner);
+                    break;
+                case 6:
+                    //System.out.println("\n");
+                    Menu06(scanner);
                     break;
                 case 0:
                     System.out.println("Ciao");

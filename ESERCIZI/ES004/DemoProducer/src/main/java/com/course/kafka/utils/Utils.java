@@ -11,10 +11,11 @@ public class Utils {
         long timeMS = endDate.getTime() - startDate.getTime();
         double timeSEC = timeMS / 1000.0;
 
-        System.out.print("Start    : " + formatter.format(startDate));
-        System.out.print("End      : " + formatter.format(endDate));
-        System.out.print("TIME MS  : " + timeMS);
-        System.out.print("TIME SEC : " + timeSEC);
+        System.out.println("Start    : " + formatter.format(startDate));
+        System.out.println("Start    : " + formatter.format(startDate));
+        System.out.println("End      : " + formatter.format(endDate));
+        System.out.println("TIME MS  : " + timeMS);
+        System.out.println("TIME SEC : " + timeSEC);
 
     }
 

@@ -55,6 +55,8 @@ public class ProducerFireAndForget {
                 record = new ProducerRecord<>(topicName, key, "Messaggio nr " + count + " del " + formatter.format(new Date()));
                 record.headers().add("CORSO_DATA", headData.getBytes());
                 producer.send(record);
+
+                System.out.println("Sent message : " + key);
             }
         } catch (Exception e) {
             System.out.println("Producer Error");

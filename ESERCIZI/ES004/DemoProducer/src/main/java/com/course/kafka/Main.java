@@ -14,9 +14,11 @@ public class Main {
         System.out.flush();
     }
 
-    public static void Menu01(){
+    public static void Menu01(Scanner scanner){
         var producer = new ProducerFireAndForget();
         producer.sendMessages("CORSO_FAF", 5000);
+        System.out.println("\n\nPremere un tasto per continuare...");
+        scanner.nextLine();
     }
 
     public static void main(String[] args) {
@@ -44,7 +46,7 @@ public class Main {
             switch (choice) {
                 case 1:
                     //System.out.println("\n");
-                    Menu01();
+                    Menu01(scanner);
                     break;
                 case 0:
                     System.out.println("Ciao");

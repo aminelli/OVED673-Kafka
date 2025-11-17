@@ -1,5 +1,6 @@
 package com.course.kafka;
 
+import com.course.kafka.producer.ProducerAckOne;
 import com.course.kafka.producer.ProducerFireAndForget;
 
 import java.util.Scanner;
@@ -22,8 +23,8 @@ public class Main {
     }
 
     public static void Menu02(Scanner scanner){
-        var producer = new ProducerFireAndForget();
-        producer.sendMessages("CORSO_FAF", 5000, 3, (short)3);
+        var producer = new ProducerAckOne();
+        producer.sendMessagesSync("CORSO_FAF", 5000, 3, (short)3);
         System.out.println("\n\nPremere un tasto per continuare...");
         scanner.nextLine();
     }

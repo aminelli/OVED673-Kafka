@@ -38,8 +38,6 @@ public class Main {
             System.out.println("-".repeat(30));
             System.out.println("0. Esci");
             System.out.println("-".repeat(30));
-            System.out.println("\n");
-            System.out.println("\n");
             System.out.println("Scegli un'opzione: ");
             choice = scanner.nextInt();
 

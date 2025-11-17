@@ -24,7 +24,7 @@ public class Main {
 
     public static void Menu02(Scanner scanner){
         var producer = new ProducerAckOne();
-        producer.sendMessagesSync("CORSO_FAF", 5000, 3, (short)3);
+        producer.sendMessagesSync("CORSO_ACK_01", 5000, 3, (short)3);
         System.out.println("\n\nPremere un tasto per continuare...");
         scanner.nextLine();
     }

@@ -10,6 +10,7 @@ public class Utils {
 
         long timeMS = endDate.getTime() - startDate.getTime();
         double timeSEC = timeMS / 1000.0;
+        double timeMIN = timeSEC / 60.0;
 
         System.out.println("-".repeat(30));
         System.out.println("STATISTICHE DEI POVERI");
@@ -19,6 +20,7 @@ public class Utils {
         System.out.println("End      : " + formatter.format(endDate));
         System.out.println("TIME MS  : " + timeMS);
         System.out.println("TIME SEC : " + timeSEC);
+        System.out.println("TIME MIN : " + timeMIN);
         System.out.println("-".repeat(30));
 
 

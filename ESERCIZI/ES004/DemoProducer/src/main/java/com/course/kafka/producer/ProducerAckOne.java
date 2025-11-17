@@ -73,8 +73,7 @@ public class ProducerAckOne extends ProducerBase {
                 Future<RecordMetadata> future = producer.send(record);
                 RecordMetadata recordMetadata = future.get();
 
-                printMetadata(recordMetadata);
-
+                //printMetadata(recordMetadata);
                 //System.out.println("Sent message : " + key);
             }
         } catch (Exception e) {

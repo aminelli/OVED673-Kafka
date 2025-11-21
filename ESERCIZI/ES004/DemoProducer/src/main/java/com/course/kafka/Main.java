@@ -19,7 +19,7 @@ public class Main {
 
     public static void Menu01(Scanner scanner){
         var producer = new ProducerFireAndForget();
-        producer.sendMessages("CORSO_FIRE_AND_FORGET", 1000000, 1, (short)1);
+        producer.sendMessages("CORSO_FIRE_AND_FORGET", 10000, 1, (short)1);
         System.out.println("\n\nPremere un tasto per continuare...");
         scanner.nextLine();
     }

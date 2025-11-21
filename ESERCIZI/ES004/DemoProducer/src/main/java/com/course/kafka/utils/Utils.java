@@ -16,7 +16,6 @@ public class Utils {
         System.out.println("STATISTICHE DEI POVERI");
         System.out.println("-".repeat(30));
         System.out.println("Start    : " + formatter.format(startDate));
-        System.out.println("Start    : " + formatter.format(startDate));
         System.out.println("End      : " + formatter.format(endDate));
         System.out.println("TIME MS  : " + timeMS);
         System.out.println("TIME SEC : " + timeSEC);

@@ -1,18 +1,16 @@
 package com.course.kafka.producer;
 
 import com.course.kafka.admin.KafkaAdmins;
-import com.course.kafka.partiotioner.CustomPartitioner;
+import com.course.kafka.partitioner.CustomPartitioner;
 import com.course.kafka.utils.Utils;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.clients.producer.ProducerRecord;
-import org.apache.kafka.clients.producer.RecordMetadata;
 import org.apache.kafka.common.serialization.StringSerializer;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Properties;
-import java.util.concurrent.Future;
 
 public class ProducerTestPartitioner {
 

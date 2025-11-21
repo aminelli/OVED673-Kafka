@@ -1,7 +1,12 @@
 package com.course.kafka;
 
+import com.course.kafka.consumer.ConsumerGeneric;
 import com.course.kafka.producer.*;
+import net.datafaker.providers.base.Bool;
+import org.apache.kafka.common.serialization.StringDeserializer;
+import org.apache.kafka.common.serialization.StringSerializer;
 
+import java.util.Optional;
 import java.util.Scanner;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
@@ -14,16 +19,30 @@ public class Main {
         System.out.flush();
     }
 
-    public static void Menu01(Scanner scanner){
-        var producer = new ProducerFireAndForget();
-        producer.sendMessages("CORSO_FIRE_AND_FORGET", 10000, 1, (short)1);
+    public static void Menu01(Scanner scanner, Boolean isProducer){
+        String topicName = "CORSO_FIRE_AND_FORGET";
+        if (isProducer) {
+            var producer = new ProducerFireAndForget();
+            producer.sendMessages(topicName, 10000, 1, (short)1);
+        } else {
+           var consumer = new ConsumerGeneric();
+           consumer.loadRecords(topicName, StringDeserializer.class, StringDeserializer.class);
+        }
+
+
         System.out.println("\n\nPremere un tasto per continuare...");
         scanner.nextLine();
     }
 
-    public static void Menu02(Scanner scanner){
-        var producer = new ProducerAckOne();
-        producer.sendMessagesSync("CORSO_ACK_01_SYNC", 1000, 3, (short)3);
+    public static void Menu02(Scanner scanner, Boolean isProducer){
+        String topicName = "CORSO_ACK_01_SYNC";
+        if (isProducer) {
+            var producer = new ProducerAckOne();
+            producer.sendMessagesSync(topicName, 1000, 3, (short) 3);
+        } else  {
+            var consumer = new ConsumerGeneric();
+            consumer.loadRecords(topicName, StringDeserializer.class, StringDeserializer.class);
+        }
         System.out.println("\n\nPremere un tasto per continuare...");
         scanner.nextLine();
     }
@@ -36,10 +55,12 @@ public class Main {
     }
 
 
-    public static void Menu04(Scanner scanner){
+    public static void Menu04(Scanner scanner ){
         var producer = new ProducerAckAll();
         producer.sendMessagesSync("CORSO_ACK_ALL_SYNC", 1000, 3, (short)3);
         System.out.println("\n\nPremere un tasto per continuare...");
+
+
         scanner.nextLine();
     }
 
@@ -94,6 +115,16 @@ public class Main {
             System.out.println("7. Producer - Customer Binary");
             System.out.println("8. Producer - Customer Json");
             System.out.println("-".repeat(30));
+            System.out.println("21. Consumer - Fire And Forget");
+            System.out.println("22. Consumer - Ack 1 Sync");
+            System.out.println("23. Consumer - Ack 1 Async");
+            System.out.println("24. Consumer - Ack All Sync");
+            System.out.println("25. Consumer - Ack All Async");
+            System.out.println("26. Consumer - Custom Partitioner");
+            System.out.println("27. Consumer - Customer Binary");
+            System.out.println("28. Consumer - Customer Json");
+
+            System.out.println("-".repeat(30));
             System.out.println("0. Esci");
             System.out.println("-".repeat(30));
             System.out.println("Scegli un'opzione: ");
@@ -101,10 +132,10 @@ public class Main {
 
             switch (choice) {
                 case 1:
-                    Menu01(scanner);
+                    Menu01(scanner, true);
                     break;
                 case 2:
-                    Menu02(scanner);
+                    Menu02(scanner, true);
                     break;
                 case 3:
                     Menu03(scanner);
@@ -124,6 +155,16 @@ public class Main {
                 case 8:
                     Menu08(scanner);
                     break;
+
+
+                case 21:
+                    Menu01(scanner, false);
+                    break;
+                case 22:
+                    Menu02(scanner, false);
+                    break;
+
+
                 case 0:
                     System.out.println("Ciao");
                     break;

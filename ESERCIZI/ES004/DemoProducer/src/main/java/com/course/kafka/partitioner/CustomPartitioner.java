@@ -1,4 +1,4 @@
-package com.course.kafka.partiotioner;
+package com.course.kafka.partitioner;
 
 import org.apache.kafka.clients.producer.Partitioner;
 import org.apache.kafka.common.Cluster;

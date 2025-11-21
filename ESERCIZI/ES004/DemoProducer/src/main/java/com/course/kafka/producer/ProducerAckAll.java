@@ -39,6 +39,15 @@ public class ProducerAckAll extends ProducerBase {
         // Algoritmo di compressione
         props.put(ProducerConfig.COMPRESSION_TYPE_CONFIG, "gzip");
 
+        // ======================================================
+        // ABILITARE IDEMPONTENZA
+        // props.put(ProducerConfig.ENABLE_IDEMPOTENCE_CONFIG, "true");
+        // ciò implica:
+        // props.put(ProducerConfig.ACKS_CONFIG, "all");
+         props.put(ProducerConfig.MAX_IN_FLIGHT_REQUESTS_PER_CONNECTION, "4"); // Deve essere <= 5
+        // props.put(ProducerConfig.RETRIES_CONFIG, 10); // Numeri tentativi quanto più alto possibile
+        // ======================================================
+
         // TIPO ACK
         props.put(ProducerConfig.ACKS_CONFIG, "all");
 

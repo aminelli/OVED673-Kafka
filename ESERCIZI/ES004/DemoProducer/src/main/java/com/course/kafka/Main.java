@@ -26,7 +26,7 @@ public class Main {
             producer.sendMessages(topicName, 10000, 1, (short)1);
         } else {
            var consumer = new ConsumerGeneric();
-           consumer.loadRecords(topicName, StringDeserializer.class, StringDeserializer.class);
+           consumer.loadRecords(topicName,"GR01","GR01-C01", StringDeserializer.class, StringDeserializer.class);
         }
 
 
@@ -41,7 +41,7 @@ public class Main {
             producer.sendMessagesSync(topicName, 1000, 3, (short) 3);
         } else  {
             var consumer = new ConsumerGeneric();
-            consumer.loadRecords(topicName, StringDeserializer.class, StringDeserializer.class);
+            consumer.loadRecords(topicName,"GR02","GR02-C01", StringDeserializer.class, StringDeserializer.class);
         }
         System.out.println("\n\nPremere un tasto per continuare...");
         scanner.nextLine();

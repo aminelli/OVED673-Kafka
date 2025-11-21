@@ -17,6 +17,7 @@
 
         <dep.kafka.version>4.1.1</dep.kafka.version>
         <dep.gson>2.13.1</dep.gson>
+        <dep.datafaker>2.5.2</dep.datafaker>
     </properties>
 
 
@@ -33,6 +34,13 @@
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
             <version>${dep.gson}</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/net.datafaker/datafaker -->
+        <dependency>
+            <groupId>net.datafaker</groupId>
+            <artifactId>datafaker</artifactId>
+            <version>${dep.datafaker}</version>
         </dependency>
 
     </dependencies>

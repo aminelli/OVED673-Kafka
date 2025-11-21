@@ -1,0 +1,111 @@
+package com.course.kafka.producer;
+
+import com.course.kafka.admin.KafkaAdmins;
+import com.course.kafka.base.ProducerBase;
+import com.course.kafka.model.Customer;
+import com.course.kafka.serialization.CustomerSerializer;
+import com.course.kafka.utils.Utils;
+import net.datafaker.Faker;
+import org.apache.kafka.clients.producer.*;
+import org.apache.kafka.common.serialization.StringSerializer;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Properties;
+import java.util.concurrent.Future;
+import java.util.concurrent.atomic.AtomicInteger;
+
+public class ProducerCustomer extends ProducerBase {
+
+    static int countMsg = 0;
+
+    // Ack = 1 e Sync
+    public void sendCustomersBinary(
+            String topicName,
+            long totalMessages,
+            final int partitions,
+            final short replications
+    ) {
+
+        Faker faker = new Faker();
+
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+
+        // PREPAZIONE PARAMETRI DI CONFIGURAZIONE
+
+        Properties props = new Properties();
+
+        // Endpoints dei nodi del cluster
+        //props.put("bootstrap.servers", "localhost:9092, localhost:9093, localhost:9094");
+        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092, localhost:9093, localhost:9094");
+
+        // Client ID
+        props.put(ProducerConfig.CLIENT_ID_CONFIG, "PRD-001");
+
+        // Algoritmo di compressione
+        props.put(ProducerConfig.COMPRESSION_TYPE_CONFIG, "gzip");
+
+        // TIPO ACK
+        props.put(ProducerConfig.ACKS_CONFIG, "1");
+
+        // Full package name delle classi da utilizzare per le serializzazioni delle chiavi e corrispettivi valori
+        // props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringSerializer");
+        // props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringSerializer");
+        props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
+        props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, CustomerSerializer.class);
+
+        // LOGICA DI CREAZIONE PRODUCER E INVIO MESSAGGI
+
+        KafkaAdmins.createTopic(topicName, partitions, replications, props);
+
+
+        KafkaProducer<String, Customer> producer = new KafkaProducer<>(props);
+
+        ProducerRecord<String, Customer> record = null;
+        Customer customer = null;
+
+        Date startDate = new Date();
+
+        try {
+            //AtomicInteger idGen = new AtomicInteger(1);
+
+            for (int count = 0; count < totalMessages; count++) {
+                String key = "K" + count;
+                String headData = "MSG" + count;
+
+                Integer id = faker.number().numberBetween(1, 100000);
+
+                customer = new Customer(
+                        id,
+                        faker.name().firstName(),
+                        faker.name().lastName()
+                );
+
+                record = new ProducerRecord<String, Customer>(topicName, key, customer);
+                record.headers().add("CORSO_DATA", headData.getBytes());
+
+                // RecordMetadata recordMetadata = producer.send(record).get();
+                // equivalente a:
+                Future<RecordMetadata> future = producer.send(record);
+                RecordMetadata recordMetadata = future.get();
+
+                //printMetadata(recordMetadata);
+                //System.out.println("Sent message : " + key);
+            }
+
+        } catch (Exception e) {
+            System.out.println("Producer Error");
+        }
+
+        Date endDate = new Date();
+
+        Utils.printDateDiff(startDate, endDate, formatter);
+
+        producer.flush();
+        producer.close();
+
+    }
+
+
+
+}

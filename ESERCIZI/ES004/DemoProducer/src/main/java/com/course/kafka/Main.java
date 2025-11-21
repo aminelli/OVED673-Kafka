@@ -1,9 +1,6 @@
 package com.course.kafka;
 
-import com.course.kafka.producer.ProducerAckAll;
-import com.course.kafka.producer.ProducerAckOne;
-import com.course.kafka.producer.ProducerFireAndForget;
-import com.course.kafka.producer.ProducerTestPartitioner;
+import com.course.kafka.producer.*;
 
 import java.util.Scanner;
 
@@ -60,6 +57,13 @@ public class Main {
         scanner.nextLine();
     }
 
+    public static void Menu07(Scanner scanner) throws InterruptedException {
+        var producer = new ProducerCustomer();
+        producer.sendCustomersBinary("CORSO_CST_PART_02", 100, 3, (short)3);
+        System.out.println("\n\nPremere un tasto per continuare...");
+        scanner.nextLine();
+    }
+
 
     public static void main(String[] args) throws InterruptedException {
 
@@ -80,6 +84,7 @@ public class Main {
             System.out.println("4. Producer - Ack All Sync");
             System.out.println("5. Producer - Ack All Async");
             System.out.println("6. Producer - Custom Partitioner");
+            System.out.println("7. Producer - Customer Binary");
             System.out.println("-".repeat(30));
             System.out.println("0. Esci");
             System.out.println("-".repeat(30));
@@ -104,6 +109,9 @@ public class Main {
                     break;
                 case 6:
                     Menu06(scanner);
+                    break;
+                case 7:
+                    Menu07(scanner);
                     break;
                 case 0:
                     System.out.println("Ciao");

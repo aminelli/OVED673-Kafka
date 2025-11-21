@@ -59,7 +59,7 @@ public class Main {
 
     public static void Menu07(Scanner scanner) throws InterruptedException {
         var producer = new ProducerCustomer();
-        producer.sendCustomersBinary("CORSO_CST_PART_02", 100, 3, (short)3);
+        producer.sendCustomersBinary("CUSTOMER_BIN", 100, 3, (short)3);
         System.out.println("\n\nPremere un tasto per continuare...");
         scanner.nextLine();
     }

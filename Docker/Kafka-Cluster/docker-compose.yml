@@ -12,9 +12,9 @@ services:
       - ./environment/.env.broker01
     networks:
       - net-kafka-cluster
-    volumes:
-      - vol-broker01-data:/var/lib/kafka/data
-      - vol-broker01-secrets:/etc/kafka/secrets
+    # volumes:
+    #   - vol-broker01-data:/var/lib/kafka/data
+    #   - vol-broker01-secrets:/etc/kafka/secrets
 
   broker02:
     image: confluentinc/cp-server:7.9.4
@@ -29,9 +29,9 @@ services:
       - broker01
     networks:
       - net-kafka-cluster
-    volumes:
-      - vol-broker02-data:/var/lib/kafka/data
-      - vol-broker02-secrets:/etc/kafka/secrets
+    # volumes:
+    #   - vol-broker02-data:/var/lib/kafka/data
+    #   - vol-broker02-secrets:/etc/kafka/secrets
 
 
   broker03:
@@ -47,9 +47,9 @@ services:
       - broker01
     networks:
       - net-kafka-cluster
-    volumes:
-      - vol-broker03-data:/var/lib/kafka/data
-      - vol-broker03-secrets:/etc/kafka/secrets
+    # volumes:
+    #   - vol-broker03-data:/var/lib/kafka/data
+    #   - vol-broker03-secrets:/etc/kafka/secrets
 
 
   schema-registry:
@@ -66,8 +66,8 @@ services:
       - ./environment/.env.schema-registry
     networks:
       - net-kafka-cluster
-    volumes:
-      - vol-schema-registry-secrets:/etc/schema-registry/secrets
+    # volumes:
+    #   - vol-schema-registry-secrets:/etc/schema-registry/secrets
 
 
   ksqldb-server:
@@ -132,16 +132,16 @@ services:
     networks:
       - net-kafka-cluster
 
-volumes:
-  vol-broker01-data:
-  vol-broker02-data:
-  vol-broker03-data:
-
-  vol-broker01-secrets:
-  vol-broker02-secrets:
-  vol-broker03-secrets:
-
-  vol-schema-registry-secrets:
+# volumes:
+#   vol-broker01-data:
+#   vol-broker02-data:
+#   vol-broker03-data:
+# 
+#   vol-broker01-secrets:
+#   vol-broker02-secrets:
+#   vol-broker03-secrets:
+# 
+#   vol-schema-registry-secrets:
 
 networks:  
   net-kafka-cluster:

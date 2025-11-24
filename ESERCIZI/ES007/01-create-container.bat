@@ -34,3 +34,4 @@ nano /etc/ksqldb/ksql-server.properties
 
 REM una volta usciti dal container, lanciare dalla rott di questo esercizio il comando:
 docker cp confluent-hub-components ksqldb-server:/usr/share/java/
+docker cp ./confluent-hub-components/lib ksqldb-server:/usr/share/java/

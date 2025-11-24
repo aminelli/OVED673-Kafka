@@ -23,7 +23,7 @@ public class ProducerTestAvro {
 
         Faker faker = new Faker();
 
-        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
+        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092,localhost:9093,localhost:9094");
         props.put(AbstractKafkaSchemaSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG, "http://localhost:8081");
 
         props.put(ProducerConfig.ACKS_CONFIG, "all");

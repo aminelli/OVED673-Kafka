@@ -112,7 +112,7 @@
                             <goal>schema</goal>
                         </goals>
                         <configuration>
-                            <sourceDirectory>${project.build.directory}/src/main/resources/avro/</sourceDirectory>
+                            <sourceDirectory>${project.basedir}/src/main/resources/avro/</sourceDirectory>
                             <includes>
                                 <include>Payment.avsc</include>
                             </includes>

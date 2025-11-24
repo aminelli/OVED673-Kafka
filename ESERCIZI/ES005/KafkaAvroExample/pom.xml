@@ -122,7 +122,7 @@
                         <configuration>
                             <sourceDirectory>${project.basedir}/src/main/resources/avro/</sourceDirectory>
                             <includes>
-                                <include>Payment.avsc</include>
+                                <include>Payment2b.avsc</include>
                             </includes>
                             <outputDirectory>${project.build.directory}/generated-sources</outputDirectory>
                         </configuration>
@@ -140,7 +140,7 @@
                     </schemaRegistryUrls>
                     <userInfoConfig>${schemaRegistryBasicAuthUserInfo}</userInfoConfig>
                     <subjects>
-                        <transactions-value>src/main/resources/avro/Payment2a.svc</transactions-value>
+                        <transactions-value>src/main/resources/avro/Payment2b.svc</transactions-value>
                     </subjects>
                 </configuration>
                 <goals>

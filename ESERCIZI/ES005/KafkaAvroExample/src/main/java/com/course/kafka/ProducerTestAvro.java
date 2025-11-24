@@ -37,7 +37,9 @@ public class ProducerTestAvro {
             for (long count = 0; count < 1000; count++) {
                 final Integer id = faker.idNumber().hashCode();
                 final Double amount = faker.number().numberBetween(100d, 10000d);
+                final String region = faker.address().state();
 
+                //final Payment payment = new Payment(id.toString(), amount,region);
                 final Payment payment = new Payment(id.toString(), amount);
                 final ProducerRecord<String, Payment> record = new ProducerRecord<>(TOPIC, id.toString(), payment);
                 producer.send(record);

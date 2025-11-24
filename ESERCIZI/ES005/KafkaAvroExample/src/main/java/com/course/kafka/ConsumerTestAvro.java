@@ -41,6 +41,9 @@ public class ConsumerTestAvro {
 
             consumer.subscribe(Collections.singletonList(TOPIC));
 
+            consumer.seekToBeginning(consumer.assignment());
+
+
             while (true) {
                final ConsumerRecords<String, Payment> records = consumer.poll(Duration.ofMillis(100));
                for (ConsumerRecord<String, Payment> record : records) {

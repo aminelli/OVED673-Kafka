@@ -34,6 +34,7 @@
 
         <io.confluent.schema-registry.version>${confluent.version.range}</io.confluent.schema-registry.version>
 
+        <dep.datafaker>2.5.2</dep.datafaker>
     </properties>
 
     <repositories>
@@ -71,6 +72,13 @@
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
             <version>${gson.version}</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/net.datafaker/datafaker -->
+        <dependency>
+            <groupId>net.datafaker</groupId>
+            <artifactId>datafaker</artifactId>
+            <version>${dep.datafaker}</version>
         </dependency>
 
         <!-- Log Dependencies -->

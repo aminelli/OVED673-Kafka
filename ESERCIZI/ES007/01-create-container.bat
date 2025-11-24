@@ -7,14 +7,18 @@ docker run -d --name mongo --hostname mongo --network kafka-cluster_net-kafka-cl
 
 docker run -d --name elastic --hostname elastic --network kafka-cluster_net-kafka-cluster -p 9200:9200 -p 9300:9300 -e discovery.type=single-node elasticsearch:7.6.2
 
-
+REM PROCEDURA PER ENTRARE NEL CONTAINER E MONTARE I CONNECTOR PLUGIN
+REM Comando per entrare nel container
 docker exec -it -u root ksqldb-server /bin/bash
+
+REM una voltka entrati nel container lanciare i seguenti comandi:
 dnf update -y
 dnf install nano -y
 cd /usr/share
 mkdir kafka
 
 nano /etc/environment
+REM nel file /etc/environment incollare le seguenti righe:
 KSQL_CONNECT_PLUGIN_PATH=/usr/share/kafka/confluent-hub-components
 KSQL_CONNECT_CONFIG_STORAGE_TOPIC=_ksql-connect-configs
 KSQL_CONNECT_OFFSET_STORAGE_TOPIC=_ksql-connect-offsets
@@ -24,6 +28,20 @@ KSQL_CONNECT_BOOTSTRAP_SERVERS=broker:9092
 KSQL_CONNECT_KEY_CONVERTER=org.apache.kafka.connect.storage.StringConverter
 KSQL_CONNECT_VALUE_CONVERTER=io.confluent.connect.avro.AvroConverter
 KSQL_CONNECT_VALUE_CONVERTER_SCHEMA_REGISTRY_URL=http://schema-registry:8081
+REM Per salvare CTRL+X e poi Y e poi INVIO per salvare
 
+nano /etc/profile.d/custom-conf.sh
+REM nel file incollare le seguenti righe:
+export KSQL_CONNECT_PLUGIN_PATH=/usr/share/kafka/confluent-hub-components
+export KSQL_CONNECT_CONFIG_STORAGE_TOPIC=_ksql-connect-configs
+export KSQL_CONNECT_OFFSET_STORAGE_TOPIC=_ksql-connect-offsets
+export KSQL_CONNECT_STATUS_STORAGE_TOPIC=_ksql-connect-statuses
+export KSQL_CONNECT_GROUP_ID=ksql-connect-cluster
+export KSQL_CONNECT_BOOTSTRAP_SERVERS=broker:9092
+export KSQL_CONNECT_KEY_CONVERTER=org.apache.kafka.connect.storage.StringConverter
+export KSQL_CONNECT_VALUE_CONVERTER=io.confluent.connect.avro.AvroConverter
+export KSQL_CONNECT_VALUE_CONVERTER_SCHEMA_REGISTRY_URL=http://schema-registry:8081
+REM Per salvare CTRL+X e poi Y e poi INVIO per salvare
 
+REM una volta usciti dal container, lanciare dalla rott di questo esercizio il comando:
 docker cp confluent-hub-components ksqldb-server:/usr/share/kafka

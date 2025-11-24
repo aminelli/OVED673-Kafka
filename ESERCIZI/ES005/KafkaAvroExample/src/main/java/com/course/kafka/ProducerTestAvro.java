@@ -18,6 +18,7 @@ public class ProducerTestAvro {
     private static final String TOPIC = "TEST_AVRO";
     private static final Properties props = new Properties();
 
+    // @SuppressWarnings("InfiniteLoopStatement")
     public static void main(String[] args) throws Exception {
 
         Faker faker = new Faker();
